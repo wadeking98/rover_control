@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 from socket import socket, AF_INET, SOCK_DGRAM, gethostname, gethostbyname
 from threading import Thread
-from pynput.keyboard import Key, Listener
 import sys
 import time
 #from picamera import PiCamera
 
-dir_dict = {Key.up:0b001, Key.down:0b010, Key.left: 0b011, Key.right: 0b100}
 
 
 
