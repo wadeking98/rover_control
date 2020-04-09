@@ -12,7 +12,10 @@ dir_dict = {Key.up:0b001, Key.down:0b010, Key.left: 0b011, Key.right: 0b100}
 direction = 0b000
 
 def connect():
-    csock.sendto("test1".encode(), ("192.168.4.1", 5555))
+    global UDP_ADDR
+    csock.sendto("test1".encode(), UDP_ADDR)
+    msg_enc, _ = csock.recvfrom(1024)
+    print(msg_enc.decode())
     return
 
 def command_send():

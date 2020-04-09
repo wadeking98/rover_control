@@ -11,7 +11,7 @@ def connect():
     global CON_ADDR
     msg_enc, addr = rsock.recvfrom(1024)
     CON_ADDR = addr
-    #rsock.sendto("test".encode(), addr)
+    rsock.sendto("test".encode(), addr)
     print(addr)
     return
 
