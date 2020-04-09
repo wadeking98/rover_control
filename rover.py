@@ -5,7 +5,6 @@ import sys
 import time
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-import cv2
 
 CON_ADDR = ()
 PORT = 5555
