@@ -45,5 +45,5 @@ if __name__ == "__main__":
 
     connthread.start()
     connthread.join()
-    # cthread.start()
-    # fthread.start()
+    cthread.start()
+    fthread.start()

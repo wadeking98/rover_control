@@ -83,11 +83,11 @@ if __name__ == "__main__":
     connthread.start()
     connthread.join()
 
-    # cthread.start()
-    # fthread.start()
+    cthread.start()
+    fthread.start()
 
     # Collect events until released
-    # with Listener(
-    #         on_press=on_press,
-    #         on_release=on_release) as listener:
-    #     listener.join()
+    with Listener(
+            on_press=on_press,
+            on_release=on_release) as listener:
+        listener.join()
