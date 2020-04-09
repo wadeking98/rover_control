@@ -17,7 +17,7 @@ def command_send():
     """
     while True:
         time.sleep(0.1)
-        csock.sendto(bytes(direction),UDP_ADDR)
+        csock.sendto(bytes(direction),("192.168.4.1",5555))
     pass
 
 def frame_recv():
@@ -57,13 +57,14 @@ if __name__ == "__main__":
         print("Usage: python3 controller.py <rover_ip> <rover_port>")
         exit(0)
     elif len(sys.argv) == 4 and sys.argv[3] == "test":
-       IP = "10.0.0.1"
+       IP = "192.168.4.2"
  
 
     csock = socket(AF_INET, SOCK_DGRAM)
     #controller will be sending and receiving so we need to bind
     csock.bind((IP, 5555))
-    
+    csock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
+    csock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
     UDP_ADDR = (sys.argv[1],int(sys.argv[2]))
 
