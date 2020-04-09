@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     csock = socket(AF_INET, SOCK_DGRAM)
     #controller will be sending and receiving so we need to bind
-    #csock.bind((IP, 5554))
+    csock.bind((IP, 5555))
     csock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
     csock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
