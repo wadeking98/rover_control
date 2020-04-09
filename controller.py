@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from socket import socket, AF_INET, SOCK_DGRAM, gethostname, gethostbyname
+from socket import *
 from threading import Thread
 from pynput.keyboard import Key, Listener
 import time
@@ -63,6 +63,7 @@ if __name__ == "__main__":
     csock = socket(AF_INET, SOCK_DGRAM)
     #controller will be sending and receiving so we need to bind
     csock.bind((IP, 5555))
+    
 
     UDP_ADDR = (sys.argv[1],int(sys.argv[2]))
 
