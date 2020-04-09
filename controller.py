@@ -12,11 +12,32 @@ dir_dict = {Key.up:0b001, Key.down:0b010, Key.left: 0b011, Key.right: 0b100}
 direction = 0b000
 PORT = 5555
 
+def sendAndWait(msg_bytes, addr, sock, time=5):
+    sock.settimeout(time)
+    sock.sendto(msg_bytes, addr)
+    msg_r = None
+    try:
+        msg_r, _ = sock.recvfrom(1024)
+    except:
+        pass
+    return msg_r
+
+def sendAndWaitForRep(msg_bytes, addr, sock, string, time=1, retry=5):
+    msg_r = None
+    while msg_r != string and retry > 0:
+        msg_r = sendAndWait(msg_bytes, addr, sock, time)
+        retry -= 1
+    return msg_r
+
+
 def connect():
     global UDP_ADDR
-    csock.sendto("test1".encode(), UDP_ADDR)
-    msg_enc, _ = csock.recvfrom(1024)
-    print(msg_enc.decode())
+    msg_r = sendAndWaitForRep("syn".encode(),UDP_ADDR,csock,"ack")
+    if msg_r is None:
+        print("could not connect")
+        exit(1)
+    csock.sendto("ack".encode(),UDP_ADDR)
+    print(msg_r.decode())
     return
 
 def command_send():

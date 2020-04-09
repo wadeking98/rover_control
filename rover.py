@@ -8,11 +8,30 @@ import time
 CON_ADDR = ()
 PORT = 5555
 
+def sendAndWait(msg_bytes, addr, sock, time=5):
+    sock.settimeout(time)
+    sock.sendto(msg_bytes, addr)
+    msg_r = None
+    try:
+        msg_r, _ = sock.recvfrom(1024)
+    except:
+        pass
+    return msg_r
+
+def sendAndWaitForRep(msg_bytes, addr, sock, string, time=1, retry=5):
+    msg_r = None
+    while msg_r != string and retry > 0:
+        msg_r = sendAndWait(msg_bytes, addr, sock, time)
+        retry -= 1
+    return msg_r
+
 def connect():
     global CON_ADDR
     msg_enc, addr = rsock.recvfrom(1024)
     CON_ADDR = addr
-    rsock.sendto("test".encode(), addr)
+    sendAndWaitForRep("ack".encode(),addr,rsock,"ack")
+    #if we dont receive an ack, that is okay, we assume the client
+    #got the message
     print(addr)
     return
 
@@ -26,7 +45,7 @@ def command_recv():
 def frame_send():
     while True:
         time.sleep(0.1)
-        rsock.sendto(bytes(0b1111),("255.255.255.255", PORT))
+        rsock.sendto(bytes(0b1111),CON_ADDR)
     pass
 
 if __name__ == "__main__":
