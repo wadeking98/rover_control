@@ -21,6 +21,7 @@ def sendAndWait(msg_bytes, addr, sock, time=5):
         msg_r, _ = sock.recvfrom(1024)
     except:
         pass
+    sock.settimeout(None)
     return msg_r
 
 def sendAndWaitForRep(msg_bytes, addr, sock, string, time=1, retry=5):
