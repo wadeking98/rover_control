@@ -26,6 +26,7 @@ def frame_recv():
     """
     while True:
         msg_enc, _ = csock.recvfrom(1024)
+        print(msg_enc)
     pass
 
 
