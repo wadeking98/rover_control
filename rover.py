@@ -3,6 +3,7 @@ from socket import *
 from threading import Thread
 import sys
 import time
+import numpy as np
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 
@@ -75,8 +76,9 @@ if __name__ == "__main__":
 
     camera.capture(rawCapture, format="bgr")
     image = rawCapture.array
+    npimg = np.asarray_chkfinite(image)
 
-    print(image)
+    print(npimg)
 
     connthread.start()
     connthread.join()
