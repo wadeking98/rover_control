@@ -29,6 +29,7 @@ def command_send():
     pass
 
 def frame_recv():
+    print("got here")
     """
     Thread to receive incoming image frames from the rover
     """

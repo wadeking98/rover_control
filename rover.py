@@ -39,8 +39,8 @@ if __name__ == "__main__":
     rsock = socket(AF_INET, SOCK_DGRAM)
     #rover will be sending and receiving so we need to bind
     rsock.bind((IP, PORT))
-    # rsock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
-    # rsock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+    rsock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
+    rsock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
     connthread = Thread(target=connect, name="conn_thread")
     cthread = Thread(target=command_recv, name="command_thread")
