@@ -5,7 +5,15 @@ import sys
 import time
 #from picamera import PiCamera
 
+CON_ADDR = ()
 
+def connect():
+    global CON_ADDR
+    while True:
+        msg_enc, addr = rsock.recvfrom(1024)
+        CON_ADDR = addr
+        rsock.sendto("test".encode(), addr)
+        print(addr)
 
 
 def command_recv():

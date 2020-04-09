@@ -17,7 +17,7 @@ def command_send():
     """
     while True:
         time.sleep(0.1)
-        csock.sendto(bytes(direction),("255.255.255.255",5555))
+        csock.sendto(bytes(direction),("192.168.4.1",5555))
     pass
 
 def frame_recv():
@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     csock = socket(AF_INET, SOCK_DGRAM)
     #controller will be sending and receiving so we need to bind
-    csock.bind((IP, 5554))
+    #csock.bind((IP, 5554))
     csock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
     csock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
