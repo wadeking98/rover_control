@@ -3,7 +3,9 @@ from socket import *
 from threading import Thread
 import sys
 import time
-#from picamera import PiCamera
+from picamera import PiCamera
+from picamera.array import PiRGBArray
+import cv2
 
 CON_ADDR = ()
 PORT = 5555
@@ -64,6 +66,17 @@ if __name__ == "__main__":
     connthread = Thread(target=connect, name="conn_thread")
     cthread = Thread(target=command_recv, name="command_thread")
     fthread = Thread(target=frame_send, name="frame_thread")
+
+    #set up the camera
+    camera = PiCamera()
+    rawCapture = PiRGBArray(camera)
+
+    time.sleep(0.1)
+
+    camera.capture(rawCapture, format="bgr")
+    image = rawCapture.array
+
+    print(image)
 
     connthread.start()
     connthread.join()
