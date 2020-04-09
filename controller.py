@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from socket import socket, AF_INET, SOCK_DGRAM, gethostname
+from socket import socket, AF_INET, SOCK_DGRAM, gethostname, gethostbyname
 from threading import Thread
 from pynput.keyboard import Key, Listener
 import time
@@ -52,8 +52,7 @@ def on_release(key):
 
 
 if __name__ == "__main__":
-    IP = gethostname()
-
+    IP = gethostbyname(gethostname())
     if len(sys.argv) < 3:
         print("Usage: python3 controller.py <rover_ip> <rover_port>")
         exit(0)
