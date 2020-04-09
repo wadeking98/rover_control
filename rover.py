@@ -14,6 +14,7 @@ def connect():
         CON_ADDR = addr
         rsock.sendto("test".encode(), addr)
         print(addr)
+        return
 
 
 def command_recv():
@@ -39,8 +40,11 @@ if __name__ == "__main__":
     rsock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
     rsock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
+    connthread = Thread(target=connect, name="conn_thread")
     cthread = Thread(target=command_recv, name="command_thread")
     fthread = Thread(target=frame_send, name="frame_thread")
 
-    cthread.start()
-    fthread.start()
+    connthread.start()
+    connthread.join()
+    # cthread.start()
+    # fthread.start()
