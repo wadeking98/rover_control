@@ -11,6 +11,10 @@ UDP_ADDR = ()
 dir_dict = {Key.up:0b001, Key.down:0b010, Key.left: 0b011, Key.right: 0b100}
 direction = 0b000
 
+def connect():
+    csock.sendto("test1".encode(), ("192.168.4.1", 5555))
+    return
+
 def command_send():
     """
     Thread to send rover control commands
@@ -69,14 +73,18 @@ if __name__ == "__main__":
 
     UDP_ADDR = (sys.argv[1],int(sys.argv[2]))
 
+    connthread = Thread(target=connect, name="conn_thread")
     cthread = Thread(target=command_send, name="command_thread")
     fthread = Thread(target=frame_recv, name="frame_thread")
 
-    cthread.start()
-    fthread.start()
+    connthread.start()
+    connthread.join()
+
+    # cthread.start()
+    # fthread.start()
 
     # Collect events until released
-    with Listener(
-            on_press=on_press,
-            on_release=on_release) as listener:
-        listener.join()
+    # with Listener(
+    #         on_press=on_press,
+    #         on_release=on_release) as listener:
+    #     listener.join()
