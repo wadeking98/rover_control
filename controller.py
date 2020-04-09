@@ -5,9 +5,7 @@ from pynput.keyboard import Key, Listener
 import time
 import sys
 
-csock = socket(AF_INET, SOCK_DGRAM)
-#controller will be sending and receiving so we need to bind
-csock.bind(("10.0.0.1", 5555))
+
 
 UDP_ADDR = ()
 dir_dict = {Key.up:0b001, Key.down:0b010, Key.left: 0b011, Key.right: 0b100}
@@ -54,9 +52,18 @@ def on_release(key):
 
 
 if __name__ == "__main__":
+    IP = gethostname()
+
     if len(sys.argv) < 3:
         print("Usage: python3 controller.py <rover_ip> <rover_port>")
         exit(0)
+    elif len(sys.argv) == 4 and sys.argv[3] == "test":
+       IP = "10.0.0.1"
+ 
+
+    csock = socket(AF_INET, SOCK_DGRAM)
+    #controller will be sending and receiving so we need to bind
+    csock.bind((IP, 5555))
 
     UDP_ADDR = (sys.argv[1],int(sys.argv[2]))
 
