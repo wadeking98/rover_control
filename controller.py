@@ -10,6 +10,7 @@ import sys
 UDP_ADDR = ()
 dir_dict = {Key.up:0b001, Key.down:0b010, Key.left: 0b011, Key.right: 0b100}
 direction = 0b000
+PORT = 5555
 
 def connect():
     global UDP_ADDR
@@ -24,7 +25,7 @@ def command_send():
     """
     while True:
         time.sleep(0.1)
-        csock.sendto(bytes(direction),("192.168.4.1",5555))
+        csock.sendto(bytes(direction),("192.168.4.1",PORT))
     pass
 
 def frame_recv():
@@ -60,13 +61,12 @@ def on_release(key):
 
 
 if __name__ == "__main__":
-    IP = gethostbyname(gethostname())
+    
     if len(sys.argv) < 3:
-        print("Usage: python3 controller.py <rover_ip> <rover_port>")
+        print("Usage: python3 controller.py <rover_ip> <controller_ip>")
         exit(0)
-    elif len(sys.argv) == 4 and sys.argv[3] == "test":
-       IP = "192.168.4.2"
- 
+   
+    IP = sys.argv[2]
 
     csock = socket(AF_INET, SOCK_DGRAM)
     #controller will be sending and receiving so we need to bind
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     csock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
     csock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
-    UDP_ADDR = (sys.argv[1],int(sys.argv[2]))
+    UDP_ADDR = (sys.argv[1],PORT)
 
     connthread = Thread(target=connect, name="conn_thread")
     cthread = Thread(target=command_send, name="command_thread")

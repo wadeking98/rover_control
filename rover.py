@@ -6,6 +6,7 @@ import time
 #from picamera import PiCamera
 
 CON_ADDR = ()
+PORT = 5555
 
 def connect():
     global CON_ADDR
@@ -25,17 +26,19 @@ def command_recv():
 def frame_send():
     while True:
         time.sleep(0.1)
-        rsock.sendto(bytes(0b1111),("255.255.255.255", 5555))
+        rsock.sendto(bytes(0b1111),("255.255.255.255", PORT))
     pass
 
 if __name__ == "__main__":
-    IP = gethostbyname(gethostname())
-    if len(sys.argv) >= 2 and sys.argv[1] =="test":
-        IP = "192.168.4.1"
+    
+    if len(sys.argv) < 2:
+        print("Usage: python3 rover.py <rover_ip>")
+
+    IP = sys.argv[1]
 
     rsock = socket(AF_INET, SOCK_DGRAM)
     #rover will be sending and receiving so we need to bind
-    rsock.bind((IP, 5555))
+    rsock.bind((IP, PORT))
     # rsock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
     # rsock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
