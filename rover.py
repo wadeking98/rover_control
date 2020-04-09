@@ -17,7 +17,7 @@ def command_recv():
 def frame_send():
     while True:
         time.sleep(0.1)
-        rsock.sendto(bytes(0b1111),("192.168.4.2", 5555))
+        rsock.sendto(bytes(0b1111),("255.255.255.255", 5555))
     pass
 
 if __name__ == "__main__":

@@ -17,7 +17,7 @@ def command_send():
     """
     while True:
         time.sleep(0.1)
-        csock.sendto(bytes(direction),("192.168.4.1",5555))
+        csock.sendto(bytes(direction),("255.255.255.255",5555))
     pass
 
 def frame_recv():
