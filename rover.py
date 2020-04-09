@@ -9,12 +9,11 @@ CON_ADDR = ()
 
 def connect():
     global CON_ADDR
-    while True:
-        msg_enc, addr = rsock.recvfrom(1024)
-        CON_ADDR = addr
-        #rsock.sendto("test".encode(), addr)
-        print(addr)
-        return
+    msg_enc, addr = rsock.recvfrom(1024)
+    CON_ADDR = addr
+    #rsock.sendto("test".encode(), addr)
+    print(addr)
+    return
 
 
 def command_recv():
@@ -37,8 +36,8 @@ if __name__ == "__main__":
     rsock = socket(AF_INET, SOCK_DGRAM)
     #rover will be sending and receiving so we need to bind
     rsock.bind((IP, 5555))
-    rsock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
-    rsock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+    # rsock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1)
+    # rsock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
     connthread = Thread(target=connect, name="conn_thread")
     cthread = Thread(target=command_recv, name="command_thread")
