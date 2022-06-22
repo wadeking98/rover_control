@@ -1,4 +1,4 @@
-numpy==1.18.3
+numpy==1.22.0
 opencv-python==4.2.0.34
 pynput==1.6.8
 python-xlib==0.27
